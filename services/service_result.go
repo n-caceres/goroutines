@@ -2,7 +2,6 @@ package services
 
 import (
 	"../domains"
-	"fmt"
 )
 import "../utils"
 
@@ -18,10 +17,6 @@ func	SetUserForResult(id int64)( *domains.Result,*utils.ApiError) {
 	result:= domains.Result{
 User:user,
 	}
-	fmt.Println(result)
-	fmt.Println(&result)
-	fmt.Println(user)
-	fmt.Println(result.User)
 	return &result,nil
 }
 func	SetSiteForResult(result *domains.Result)(*domains.Result,*utils.ApiError) {
@@ -29,12 +24,6 @@ func	SetSiteForResult(result *domains.Result)(*domains.Result,*utils.ApiError) {
 	if apiError != nil {
 		return nil,apiError
 	}
-
-	fmt.Println(result)
-	fmt.Println(site)
-	fmt.Println(&result)
-	fmt.Println(&site)
-
 	result.Site=site
 	return result,nil
 }
@@ -43,12 +32,6 @@ country,apiError:=GetCountryFromApi(result.User.CountryID)//Traigo Country con c
 if apiError!= nil {
 return nil,apiError
 }
-fmt.Println(result)
-	fmt.Println(country)
-	fmt.Println(&result)
-	fmt.Println(&country)
-
-
 result.Country=country
 return result,nil
 }

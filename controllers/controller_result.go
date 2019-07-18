@@ -4,7 +4,6 @@ import (
 	"../domains"
 	"../services"
 	"../utils"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -31,10 +30,10 @@ func	GetResult(ctx *gin.Context){
 	}
 
 	result,error:=services.SetUserForResult(id)
-	fmt.Println(result)
 	if error!=nil{
-		//ToDo
-		}
+		ctx.JSON(error.Status,error.Message)
+		return
+	}
 	wg.Add(1)
 	go func() {
 		result,error=services.SetSiteForResult(result)
@@ -70,7 +69,6 @@ func	GetResult(ctx *gin.Context){
 
 	//Limpio el waiting group de las corridas correctas.
 	wg.Wait()
-	println(result)
 	ctx.JSON(http.StatusOK,result)
 }
 
