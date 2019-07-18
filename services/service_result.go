@@ -7,10 +7,9 @@ import "../utils"
 
 var result domains.Result
 
-//func	GetResultFromApi(user *domains.User, site *domains.Site,country *domains.Country)(*domains.Result){
 
 func	SetUserForResult(id int64)( *domains.Result,*utils.ApiError) {
-	user, apiError := GetUserFromApi(id) //Traigo Usuario
+	user, apiError := GetUserFromApi(id)
 	if apiError != nil {
 		return nil,apiError
 	}
@@ -20,7 +19,7 @@ User:user,
 	return &result,nil
 }
 func	SetSiteForResult(result *domains.Result)(*domains.Result,*utils.ApiError) {
-	site, apiError := GetSiteFromApi(result.User.SiteID) //Traigo Site, con site id del usuario
+	site, apiError := GetSiteFromApi(result.User.SiteID)
 	if apiError != nil {
 		return nil,apiError
 	}
@@ -28,7 +27,7 @@ func	SetSiteForResult(result *domains.Result)(*domains.Result,*utils.ApiError) {
 	return result,nil
 }
 func	SetCountryForResult(result *domains.Result)(*domains.Result,*utils.ApiError) {
-country,apiError:=GetCountryFromApi(result.User.CountryID)//Traigo Country con countryID del usuario
+country,apiError:=GetCountryFromApi(result.User.CountryID)
 if apiError!= nil {
 return nil,apiError
 }

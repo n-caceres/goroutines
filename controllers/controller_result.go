@@ -1,5 +1,4 @@
 package controllers
-//github.com/stretchr/testify/assert
 import (
 	"../domains"
 	"../services"
@@ -67,7 +66,6 @@ func	GetResult(ctx *gin.Context){
 		return
 	}
 
-	//Limpio el waiting group de las corridas correctas.
 	wg.Wait()
 	ctx.JSON(http.StatusOK,result)
 }
