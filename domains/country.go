@@ -1,10 +1,11 @@
 package domains
+
 import (
+	"../utils"
+	"../services"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"../utils"
 )
 
 type Country struct {
@@ -37,17 +38,10 @@ func (country *Country) Get() *utils.ApiError{
 		}
 	}
 
-	url := fmt.Sprintf("%s%s", utils.UrlCountry, country.ID)
+	url := fmt.Sprintf("%s%s", utils.UrlCountryDev, country.ID)
+//	url := fmt.Sprintf("%s%s", utils.UrlCountryProd, country.ID)
 
-	response, err := http.Get(url)
-	if err != nil{
-		return &utils.ApiError{
-			Message: err.Error(),
-			Status: http.StatusInternalServerError,
-		}
-	}
-
-	data, err := ioutil.ReadAll(response.Body)
+	data, err := services.GetWithCBreaker(url)
 	if err != nil {
 		return &utils.ApiError{
 			Message: err.Error(),

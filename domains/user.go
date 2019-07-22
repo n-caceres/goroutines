@@ -1,11 +1,11 @@
 package domains
 
 import (
+	"../utils"
+	"../services"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"../utils"
 )
 
 type User struct {
@@ -47,27 +47,18 @@ func (user *User) Get() *utils.ApiError {
 		}
 	}
 
-	url := fmt.Sprintf("%s%d", utils.UrlUser, user.ID)
-
-	response, err := http.Get(url)
+	url := fmt.Sprintf("%s%d", utils.UrlUserDev, user.ID)
+//	url := fmt.Sprintf("%s%d", utils.UrlUserProd, user.ID)
+	data, err := services.GetWithCBreaker(url)
 	if err != nil {
 		return &utils.ApiError{
-			Message: err.Error(),
+			Message: "error del ioutil "+err.Error(),
 			Status:  http.StatusInternalServerError,
 		}
 	}
-
-	data, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return &utils.ApiError{
-			Message: err.Error(),
-			Status:  http.StatusInternalServerError,
-		}
-	}
-
 	if err := json.Unmarshal(data, &user); err != nil {
 		return &utils.ApiError{
-			Message: err.Error(),
+			Message: "error unmarshall"+err.Error(),
 			Status:  http.StatusInternalServerError,
 		}
 	}

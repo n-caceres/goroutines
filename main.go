@@ -1,19 +1,25 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 import "./controllers"
 
 const(
 	port=":8080"
+	//Enviroment="Desarrollo"//"Produccion"
 )
+
 var(
 	router=gin.Default()
 )
+
 func main() {
-	router.GET("/user/:userID",controllers.GetUser)
-	router.GET("/country/:countryID",controllers.GetCountry)
-	router.GET("/site/:siteID",controllers.GetSite)
-	router.GET("/result/:userID",controllers.GetResult)
-	//
-	router.Run(port)
+
+		router.GET("/user/:userID",controllers.GetUser)
+		router.GET("/country/:countryID",controllers.GetCountry)
+		router.GET("/site/:siteID",controllers.GetSite)
+		router.GET("/result/:userID",controllers.GetResult)
+		router.Run(port)
+
 }

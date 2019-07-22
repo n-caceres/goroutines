@@ -1,9 +1,10 @@
 package domains
+
 import (
 	"../utils"
+	"../services"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -41,17 +42,11 @@ func (site *Site) Get() *utils.ApiError{
 		}
 	}
 
-	url := fmt.Sprintf("%s%s", utils.UrlSite, site.ID)
+	url := fmt.Sprintf("%s%s", utils.UrlSiteDev, site.ID)
+//	url := fmt.Sprintf("%s%s", utils.UrlSiteProd, site.ID)
 
-	response, err := http.Get(url)
-	if err != nil{
-		return &utils.ApiError{
-			Message: err.Error(),
-			Status: http.StatusInternalServerError,
-		}
-	}
+	data, err := services.GetWithCBreaker(url)
 
-	data, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return &utils.ApiError{
 			Message: err.Error(),
